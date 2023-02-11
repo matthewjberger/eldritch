@@ -3,5 +3,12 @@ name = "eldritch"
 version = "0.1.0"
 edition = "2021"
 
+[workspace]
+default-members = ["apps/editor"]
+members = [
+    "apps/editor",
+    "crates/app"
+]
+
 [dependencies]
-winit = "0.28.1"
+app = { path = "crates/app" }
