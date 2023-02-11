@@ -1,7 +1,7 @@
 use winit::{
 	event::{Event, WindowEvent},
 	event_loop::{ControlFlow, EventLoop},
-	window::WindowBuilder,
+	window::{Window, WindowBuilder},
 };
 
 pub struct Application;
@@ -12,8 +12,7 @@ impl Application {
 	}
 
 	pub fn run(self) {
-		let event_loop = EventLoop::new();
-		let window = WindowBuilder::new().build(&event_loop).unwrap();
+		let (event_loop, window) = create_window();
 
 		event_loop.run(move |event, _, control_flow| {
 			*control_flow = ControlFlow::Wait;
@@ -27,4 +26,10 @@ impl Application {
 			}
 		});
 	}
+}
+
+fn create_window() -> (EventLoop<()>, Window) {
+	let event_loop = EventLoop::new();
+	let window = WindowBuilder::new().build(&event_loop).unwrap();
+	(event_loop, window)
 }
