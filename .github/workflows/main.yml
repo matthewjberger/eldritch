@@ -1,0 +1,45 @@
+name: Eldritch CI
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+
+    name: Validate on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+
+  - name: Show versions
+        run: |
+          rustc --version
+          cargo fmt -- --version
+          cargo clippy -- --version
+
+      - name: Check for errors
+        run: cargo check --all --tests
+
+      - name: Check formatting
+        run: cargo fmt --all --check
+
+      - name: Lint
+        run: cargo clippy --all --tests -- -D warnings
+
+      - name: Test
+        run: cargo test --all -- --nocapture
+        env:
+          RUST_LOG: debug
