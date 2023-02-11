@@ -2,7 +2,9 @@ name: Eldritch CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - refs/heads/*
 
 jobs:
   check:
@@ -24,7 +26,7 @@ jobs:
           toolchain: stable
           components: rustfmt, clippy
 
-  - name: Show versions
+      - name: Show versions
         run: |
           rustc --version
           cargo fmt -- --version
@@ -41,5 +43,3 @@ jobs:
 
       - name: Test
         run: cargo test --all -- --nocapture
-        env:
-          RUST_LOG: debug
