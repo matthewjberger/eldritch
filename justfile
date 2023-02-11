@@ -2,6 +2,7 @@ set windows-shell := ["powershell.exe"]
 
 check:
   cargo check --all --tests
+  cargo fmt --all --check
 
 format:
   cargo fmt --all
