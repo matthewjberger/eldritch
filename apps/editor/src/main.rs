@@ -1,5 +1,6 @@
 use eldritch::app::Application;
+use std::error::Error;
 
-fn main() {
-	Application::new().run();
+fn main() -> Result<(), Box<dyn Error>> {
+	Application::new().run()
 }
